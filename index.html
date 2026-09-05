@@ -8,14 +8,14 @@
     <style>
         /* === CSS VARIABLES & RESET === */
         :root {
-            --primary: #00B14F; /* Ditukar ke Hijau */
-            --primary-hover: #009944; /* Ditukar ke Hijau Gelap sikit */
+            --primary: #00B14F; 
+            --primary-hover: #009944; 
             --bg-color: #F1F1F2;
             --card-bg: #FFFFFF;
             --text-main: #161823;
             --text-muted: #8A8B91;
             --border-color: #E3E3E4;
-            --success: #25D366; /* WhatsApp Green */
+            --success: #25D366; 
         }
 
         * {
@@ -144,13 +144,13 @@
             border-radius: 12px;
             overflow: hidden;
             position: relative;
-            background: linear-gradient(135deg, #00C964, #00B14F); /* Ditukar ke Hijau */
+            background: linear-gradient(135deg, #00C964, #00B14F); 
             color: white;
             padding: 24px 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(0, 177, 79, 0.3); /* Ditukar ke Hijau */
+            box-shadow: 0 4px 15px rgba(0, 177, 79, 0.3); 
         }
         
         .hero-banner::after {
@@ -229,6 +229,7 @@
             width: 100%;
             padding-top: 100%; /* 1:1 Aspect Ratio */
             background: #EAEAEB;
+            cursor: pointer; /* Indikator boleh klik */
         }
 
         .product-img {
@@ -254,6 +255,7 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            pointer-events: none;
         }
 
         .badge-overlay svg { width: 10px; height: 10px; fill: #FFD700; }
@@ -319,7 +321,7 @@
             justify-content: center;
             border: none;
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0, 177, 79, 0.4); /* Ditukar ke Hijau */
+            box-shadow: 0 2px 6px rgba(0, 177, 79, 0.4); 
             transition: transform 0.1s;
         }
         .add-btn:active { transform: scale(0.9); }
@@ -502,6 +504,80 @@
             border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
         }
 
+        /* === PRODUCT MODAL (IMAGE & FORM) === */
+        .product-modal {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff;
+            z-index: 1001;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        .product-modal.open { transform: translateY(0); }
+        .pm-header { 
+            padding: 15px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid var(--border-color); 
+            background: #fff;
+            font-weight: 700;
+        }
+        .pm-content { flex: 1; overflow-y: auto; padding-bottom: 20px; }
+        
+        .pm-gallery { 
+            display: flex; 
+            overflow-x: auto; 
+            scroll-snap-type: x mandatory; 
+            scrollbar-width: none; 
+            background: #000;
+        }
+        .pm-gallery::-webkit-scrollbar { display: none; }
+        .pm-gallery img { 
+            width: 100%; 
+            height: 300px; 
+            object-fit: contain; 
+            scroll-snap-align: start; 
+            flex-shrink: 0; 
+        }
+
+        .pm-details { padding: 20px; }
+        .pm-title { font-size: 20px; font-weight: 700; margin-bottom: 5px; }
+        .pm-price { font-size: 22px; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
+        
+        .pm-form { display: flex; flex-direction: column; gap: 15px; }
+        .pm-form-group { display: flex; flex-direction: column; gap: 6px; }
+        .pm-form-group label { font-size: 13px; font-weight: 600; color: var(--text-main); }
+        .pm-form-group input { 
+            padding: 12px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            font-size: 14px; 
+            outline: none;
+            background: #F8F8F8;
+        }
+        .pm-form-group input:focus { border-color: var(--primary); background: #fff; }
+
+        .pm-submit-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+
         /* === TOAST NOTIFICATION === */
         .toast {
             position: absolute;
@@ -613,6 +689,46 @@
             </div>
         </div>
 
+        <!-- FULLSCREEN PRODUCT MODAL (IMAGE + FORM) -->
+        <div class="product-modal" id="product-modal">
+            <div class="pm-header">
+                <span id="pm-header-title">Butiran</span>
+                <button class="close-btn" onclick="closeProductModal()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="pm-content">
+                <div class="pm-gallery" id="pm-gallery">
+                    <!-- Images Injected Dynamically -->
+                </div>
+                <div class="pm-details">
+                    <div class="pm-title" id="pm-title">-</div>
+                    <div class="pm-price" id="pm-price">-</div>
+                    
+                    <form class="pm-form" id="booking-form" onsubmit="submitDirectBooking(event)">
+                        <div class="pm-form-group">
+                            <label>Nama Anda</label>
+                            <input type="text" id="form-nama" placeholder="Sila masukkan nama" required>
+                        </div>
+                        <div style="display:flex; gap:10px;">
+                            <div class="pm-form-group" style="flex:1;">
+                                <label>Tarikh Check-in</label>
+                                <input type="date" id="form-checkin" required>
+                            </div>
+                            <div class="pm-form-group" style="flex:1;">
+                                <label>Tarikh Check-out</label>
+                                <input type="date" id="form-checkout" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="pm-submit-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            Tempah Sekarang
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- TOAST -->
         <div class="toast" id="toast">Berjaya dimasukkan!</div>
 
@@ -624,7 +740,7 @@
         const products = [
             {
                 id: 1,
-                name: "Rumah Merah", /* Nama dikemas kini */
+                name: "Rumah Merah", 
                 category: "Bilik",
                 price: 150,
                 originalPrice: 300,
@@ -636,19 +752,28 @@
             },
             {
                 id: 2,
-                name: "Rumah Hijau", /* Nama dikemas kini */
+                name: "Rumah Hijau", 
                 category: "Bilik",
                 price: 150,
                 originalPrice: 180,
                 sold: 432,
                 rating: "4.8",
-                image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                // Menggunakan imej lampiran untuk dipapar di katalog depan (imej luar)
+                image: "1000732377.jpg", 
+                // Semua imej lampiran yang akan dipaparkan bila dibesarkan / diklik
+                images: [
+                    "1000732377.jpg",
+                    "1000732381.jpg",
+                    "1000732378.jpg",
+                    "1000732379.jpg",
+                    "1000732380.jpg"
+                ],
                 badge: "Free WiFi",
                 badgeIcon: '<svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0 M1.42 9a16 16 0 0121.16 0 M8.53 16.11a6 6 0 016.95 0 M12 20h.01"/></svg>'
             },
             {
                 id: 3,
-                name: "Rumah Kelabu", /* Nama dikemas kini */
+                name: "Rumah Kelabu", 
                 category: "Gazebo",
                 price: 220,
                 originalPrice: null,
@@ -660,7 +785,7 @@
             },
             {
                 id: 4,
-                name: "Rumah Biru", /* Nama dikemas kini */
+                name: "Rumah Biru", 
                 category: "Bilik",
                 price: 220,
                 originalPrice: null,
@@ -672,7 +797,7 @@
             },
             {
                 id: 5,
-                name: "Rumah Kuning", /* Nama dikemas kini */
+                name: "Rumah Kuning", 
                 category: "Bilik",
                 price: 150,
                 originalPrice: 420,
@@ -684,7 +809,7 @@
             },
             {
                 id: 6,
-                name: "Rumah Pink", /* Nama dikemas kini */
+                name: "Rumah Pink", 
                 category: "Pakej",
                 price: 150,
                 originalPrice: 150,
@@ -699,6 +824,7 @@
         // --- 2. APP STATE ---
         let cart = {}; // { id: qty }
         let currentCategory = "Semua";
+        let currentViewProductId = null; // Untuk paparan borang langung
 
         // --- 3. DOM ELEMENTS ---
         const productGrid = document.getElementById('product-grid');
@@ -729,8 +855,9 @@
                 
                 const card = document.createElement('div');
                 card.className = 'product-card';
+                // Tambah event klik pada kawasan imej untuk buka form & gambar besar
                 card.innerHTML = `
-                    <div class="product-image-wrapper">
+                    <div class="product-image-wrapper" onclick="openProductModal(${product.id})">
                         <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy">
                         ${product.badge ? `<div class="badge-overlay">${product.badgeIcon} ${product.badge}</div>` : ''}
                     </div>
@@ -756,11 +883,8 @@
         // --- 5. CATEGORY & SEARCH FILTER ---
         categoryBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                // Update UI active state
                 categoryBtns.forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
-                
-                // Filter
                 currentCategory = e.target.dataset.category;
                 filterAndRender();
             });
@@ -778,7 +902,7 @@
             renderProducts(filtered);
         }
 
-        // --- 6. CART LOGIC ---
+        // --- 6. CART LOGIC (KEKAL) ---
         function addToCart(id, name) {
             if (cart[id]) {
                 cart[id]++;
@@ -798,17 +922,12 @@
         }
 
         function updateCartUI() {
-            // Update Badge
             const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
             cartBadge.textContent = totalItems > 99 ? '99+' : totalItems;
             
-            if (totalItems > 0) {
-                cartBadge.classList.add('show');
-            } else {
-                cartBadge.classList.remove('show');
-            }
+            if (totalItems > 0) cartBadge.classList.add('show');
+            else cartBadge.classList.remove('show');
 
-            // Update Modal Items
             cartItemsContainer.innerHTML = '';
             let totalPrice = 0;
 
@@ -845,8 +964,6 @@
                     cartItemsContainer.appendChild(itemEl);
                 }
             }
-
-            // Update Total Price
             cartTotalVal.textContent = `RM${totalPrice}`;
         }
 
@@ -856,13 +973,12 @@
                 cartModal.classList.remove('open');
                 overlay.classList.remove('active');
             } else {
-                updateCartUI(); // Refresh state before opening
+                updateCartUI(); 
                 cartModal.classList.add('open');
                 overlay.classList.add('active');
             }
         }
 
-        // --- 7. WHATSAPP CHECKOUT ---
         function checkoutWhatsApp() {
             if (Object.keys(cart).length === 0) {
                 showMsg('Sila tambah bilik/pakej ke troli dahulu.');
@@ -885,8 +1001,69 @@
             const encodedMsg = encodeURIComponent(msg);
             const whatsappUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodedMsg}`;
 
-            // Close modal & redirect
             toggleCart();
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // --- 7. DIRECT BOOKING MODAL LOGIC (BARU DITAMBAH) ---
+        function openProductModal(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+            
+            currentViewProductId = id;
+            
+            // Render gallery imej (sokongan imej pelbagai untuk Rumah Hijau)
+            const gallery = document.getElementById('pm-gallery');
+            gallery.innerHTML = '';
+            
+            const imageList = product.images || [product.image];
+            imageList.forEach(imgSrc => {
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                gallery.appendChild(img);
+            });
+
+            // Isikan butiran
+            document.getElementById('pm-header-title').textContent = product.name;
+            document.getElementById('pm-title').textContent = product.name;
+            document.getElementById('pm-price').textContent = `RM${product.price} / Malam`;
+
+            // Reset borang
+            document.getElementById('booking-form').reset();
+
+            // Tunjuk paparan form
+            document.getElementById('product-modal').classList.add('open');
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal').classList.remove('open');
+            currentViewProductId = null;
+        }
+
+        function submitDirectBooking(e) {
+            e.preventDefault();
+            
+            const product = products.find(p => p.id === currentViewProductId);
+            if(!product) return;
+
+            const nama = document.getElementById('form-nama').value;
+            const checkin = document.getElementById('form-checkin').value;
+            const checkout = document.getElementById('form-checkout').value;
+
+            // Format mesej WhatsApp tempahan langsung
+            let msg = `*TEMPAHAN LANGSUNG - DKETAPANG CHALET* 🏖️\n\n`;
+            msg += `Item: *${product.name}*\n`;
+            msg += `Harga: RM${product.price} / Malam\n\n`;
+            msg += `Nama: ${nama}\n`;
+            msg += `Check-in: ${checkin}\n`;
+            msg += `Check-out: ${checkout}\n\n`;
+            msg += `Boleh saya tahu jika ada kekosongan untuk tarikh ini? Terima kasih!`;
+
+            const phone = "60123574916";
+            const encodedMsg = encodeURIComponent(msg);
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodedMsg}`;
+
+            closeProductModal();
             window.open(whatsappUrl, '_blank');
         }
 
