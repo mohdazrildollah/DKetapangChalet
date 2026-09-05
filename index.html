@@ -16,6 +16,7 @@
             --text-muted: #8A8B91;
             --border-color: #E3E3E4;
             --success: #25D366; 
+            --star-color: #FFD700;
         }
 
         * {
@@ -103,32 +104,6 @@
             font-size: 13px;
         }
 
-        .cart-icon-wrapper {
-            position: relative;
-            padding: 5px;
-            cursor: pointer;
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -2px;
-            right: -5px;
-            background: var(--primary);
-            color: white;
-            font-size: 10px;
-            font-weight: bold;
-            min-width: 18px;
-            height: 18px;
-            border-radius: 9px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 5px;
-            transform: scale(0);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .cart-badge.show { transform: scale(1); }
-
         /* === MAIN CONTENT === */
         main {
             flex: 1;
@@ -211,7 +186,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            padding: 0 15px;
+            padding: 0 15px 15px 15px;
         }
 
         .product-card {
@@ -222,6 +197,11 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             display: flex;
             flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .product-card:active {
+            transform: scale(0.98);
         }
 
         .product-image-wrapper {
@@ -229,7 +209,6 @@
             width: 100%;
             padding-top: 100%; /* 1:1 Aspect Ratio */
             background: #EAEAEB;
-            cursor: pointer; /* Indikator boleh klik */
         }
 
         .product-img {
@@ -307,25 +286,179 @@
             margin-top: auto;
         }
 
-        .add-btn {
-            position: absolute;
-            bottom: 12px;
-            right: 10px;
-            background: var(--primary);
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
+        /* === CHALET INFO SECTION === */
+        .info-section {
+            background: #fff;
+            margin: 0 15px 15px 15px;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .info-section h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0, 177, 79, 0.4); 
-            transition: transform 0.1s;
+            gap: 6px;
         }
-        .add-btn:active { transform: scale(0.9); }
-        .add-btn svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2.5; }
+        .info-section h3 svg {
+            stroke: var(--primary);
+        }
+        .info-block {
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+        .info-block:last-child {
+            margin-bottom: 0;
+        }
+        .info-block h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .info-block ul {
+            list-style: none;
+        }
+        .info-block ul li {
+            margin-bottom: 4px;
+        }
+        .info-block ul li strong {
+            font-weight: 600;
+        }
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        /* === MAP SECTION === */
+        .map-section {
+            background: #fff;
+            margin: 0 15px 15px 15px;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .map-section h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .map-section h3 svg {
+            stroke: var(--primary);
+        }
+        .map-container {
+            width: 100%;
+            height: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #EAEAEB;
+        }
+
+        /* === REVIEWS SECTION === */
+        .reviews-section {
+            background: #fff;
+            margin: 0 15px 15px 15px;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .reviews-section h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .review-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 5px;
+            font-size: 26px;
+            color: #E3E3E4;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+        .star-rating span {
+            transition: color 0.2s;
+        }
+        .star-rating span.active {
+            color: var(--star-color);
+        }
+
+        .review-form input, .review-form textarea {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+            background: #F8F8F8;
+            font-family: inherit;
+        }
+        .review-form input:focus, .review-form textarea:focus {
+            border-color: var(--primary);
+            background: #fff;
+        }
+        .review-form textarea {
+            resize: none;
+            height: 70px;
+        }
+        .review-submit-btn {
+            background: var(--text-main);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .review-submit-btn:active { background: #000; }
+
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .review-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .reviewer-name {
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .review-stars {
+            color: var(--star-color);
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        .review-text {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
 
         /* === BOTTOM NAV === */
         .bottom-nav {
@@ -358,153 +491,7 @@
         .nav-item svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; }
         .nav-item.active svg { fill: currentColor; stroke: none; }
 
-        /* === CART BOTTOM SHEET === */
-        .overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .overlay.active { opacity: 1; pointer-events: auto; }
-
-        .bottom-sheet {
-            position: absolute;
-            bottom: 0; left: 0; width: 100%;
-            background: #fff;
-            border-radius: 20px 20px 0 0;
-            transform: translateY(100%);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            max-height: 85vh;
-            padding-bottom: env(safe-area-inset-bottom, 0px);
-        }
-        .bottom-sheet.open { transform: translateY(0); }
-
-        .cart-header {
-            padding: 18px 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 700;
-            font-size: 16px;
-        }
-        
-        .close-btn {
-            background: #F1F1F2;
-            border: none;
-            width: 30px; height: 30px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
-        }
-
-        .cart-items {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .cart-item {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            background: #fff;
-        }
-
-        .cart-item img {
-            width: 70px;
-            height: 70px;
-            border-radius: 8px;
-            object-fit: cover;
-            background: #EAEAEB;
-        }
-
-        .cart-item-info { flex: 1; }
-        .cart-item-title { font-size: 13px; font-weight: 600; line-height: 1.3; margin-bottom: 6px; }
-        .cart-item-price { color: var(--primary); font-weight: 800; font-size: 14px; }
-
-        .quantity-control {
-            display: flex;
-            align-items: center;
-            background: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .qty-btn {
-            background: #F8F8F8;
-            border: none;
-            width: 28px; height: 28px;
-            font-size: 16px;
-            font-weight: bold;
-            color: var(--text-main);
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .qty-val { width: 30px; text-align: center; font-size: 13px; font-weight: 600; }
-
-        .cart-footer {
-            padding: 20px;
-            background: #fff;
-            border-top: 1px solid var(--border-color);
-            box-shadow: 0 -4px 10px rgba(0,0,0,0.03);
-        }
-
-        .cart-total-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        .cart-total-label { font-size: 14px; color: var(--text-muted); }
-        .cart-total-val { font-size: 20px; font-weight: 800; color: var(--text-main); }
-
-        .checkout-btn {
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 30px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-            transition: background 0.2s;
-        }
-        .checkout-btn:active { background: #1EBE5C; }
-
-        .empty-cart-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 0;
-            color: var(--text-muted);
-            text-align: center;
-        }
-        .empty-cart-state svg { width: 60px; height: 60px; fill: #D0D0D2; margin-bottom: 15px; }
-        .empty-cart-state p { font-size: 14px; margin-bottom: 20px; }
-        .empty-cart-btn {
-            background: var(--text-main); color: white; border: none; padding: 10px 20px;
-            border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
-        }
-
-        /* === PRODUCT MODAL (IMAGE & FORM) === */
+        /* === FULLSCREEN PRODUCT MODAL (IMAGE + FORM) === */
         .product-modal {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -524,6 +511,14 @@
             border-bottom: 1px solid var(--border-color); 
             background: #fff;
             font-weight: 700;
+        }
+        .close-btn {
+            background: #F1F1F2;
+            border: none;
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
         }
         .pm-content { flex: 1; overflow-y: auto; padding-bottom: 20px; }
         
@@ -614,10 +609,6 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 <input type="text" id="search-input" placeholder="Cari bilik atau pakej...">
             </div>
-            <div class="cart-icon-wrapper" onclick="toggleCart()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                <div class="cart-badge" id="cart-badge">0</div>
-            </div>
         </header>
 
         <!-- MAIN FEED -->
@@ -641,6 +632,117 @@
             <section class="product-grid" id="product-grid">
                 <!-- Products dynamically injected via JS -->
             </section>
+
+            <!-- CHALET INFO SECTION -->
+            <section class="info-section">
+                <h3>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    Maklumat Lengkap Chalet
+                </h3>
+                
+                <div class="info-block">
+                    <h4>Maklumat Homestay</h4>
+                    <p><strong>Nama homestay:</strong> D'Ketapang Chalet<br>
+                    Penginapan selesa yang sangat sesuai untuk percutian dan aktiviti santai.</p>
+                </div>
+
+                <div class="info-block">
+                    <h4>1. Maklumat Tempahan</h4>
+                    <ul>
+                        <li><strong>Waktu Check-in:</strong> 2.00 petang</li>
+                        <li><strong>Waktu Check-out:</strong> 12.00 tengah hari</li>
+                        <li><strong>Maksimum tetamu:</strong> 10 orang dewasa</li>
+                        <li><strong>Bilik tidur:</strong> 2 bilik tidur</li>
+                        <li><strong>Katil:</strong> 2 katil saiz Queen</li>
+                        <li><strong>Bilik air:</strong> 1 bilik air dan tandas</li>
+                    </ul>
+                </div>
+
+                <div class="info-block">
+                    <h4>2. Harga</h4>
+                    <ul>
+                        <li><strong>Harga:</strong> Mengikut pilihan rumah chalet</li>
+                        <li><strong>Deposit:</strong> RM 50.00</li>
+                        <li><strong>Caj tambahan:</strong> Toto RM 10.00 , Peralatan BBQ RM 20.00 (termasuk arang)</li>
+                    </ul>
+                </div>
+
+                <div class="info-block">
+                    <h4>3. Kemudahan</h4>
+                    <div class="amenities-grid">
+                        <span>✅ WiFi</span>
+                        <span>✅ Aircond</span>
+                        <span>✅ Digital TV</span>
+                        <span>✅ Iron</span>
+                        <span>✅ Peti sejuk</span>
+                        <span>✅ BBQ</span>
+                        <span>✅ Parking</span>
+                    </div>
+                </div>
+
+                <div class="info-block">
+                    <h4>4. Pembayaran</h4>
+                    <ul>
+                        <li><strong>Nama penerima:</strong> Norazilah binti Dollah</li>
+                        <li><strong>Nama bank:</strong> CIMB Bank</li>
+                        <li><strong>Nombor akaun:</strong> 7610818164</li>
+                    </ul>
+                </div>
+
+                <div class="info-block">
+                    <h4>5. WhatsApp</h4>
+                    <p><strong>Nombor owner chalet:</strong> 013-9188230</p>
+                </div>
+            </section>
+
+            <!-- GOOGLE MAPS SECTION -->
+            <section class="map-section">
+                <h3>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    Lokasi Kami
+                </h3>
+                <div class="map-container">
+                    <iframe src="https://maps.google.com/maps?q=D'Ketapang%20Chalet&t=&z=14&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </section>
+
+            <!-- REVIEW & RATING SECTION -->
+            <section class="reviews-section">
+                <h3>Ulasan & Rating Pelanggan</h3>
+                
+                <form class="review-form" id="submit-review-form">
+                    <div class="star-rating" id="star-rating">
+                        <span data-value="1">★</span>
+                        <span data-value="2">★</span>
+                        <span data-value="3">★</span>
+                        <span data-value="4">★</span>
+                        <span data-value="5">★</span>
+                    </div>
+                    <input type="hidden" id="rating-value" value="0">
+                    <input type="text" id="reviewer-name" placeholder="Nama anda" required>
+                    <textarea id="review-text" placeholder="Kongsi pengalaman anda di sini..." required></textarea>
+                    <button type="submit" class="review-submit-btn">Hantar Ulasan</button>
+                </form>
+
+                <div class="review-list" id="review-list">
+                    <!-- Mock Review 1 -->
+                    <div class="review-item">
+                        <div class="review-header">
+                            <span class="reviewer-name">Nurul Huda</span>
+                            <span class="review-stars">★★★★★</span>
+                        </div>
+                        <div class="review-text">Sangat selesa dan berbaloi. Pemandangan pantai memang cantik terutamanya waktu petang. Akan repeat lagi!</div>
+                    </div>
+                    <!-- Mock Review 2 -->
+                    <div class="review-item" style="padding-top: 10px; border-top: 1px solid #F1F1F2;">
+                        <div class="review-header">
+                            <span class="reviewer-name">Azman Rosli</span>
+                            <span class="review-stars">★★★★☆</span>
+                        </div>
+                        <div class="review-text">Bilik bersih, kemudahan lengkap. Sangat sesuai untuk percutian keluarga. BBQ spot pun strategik.</div>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <!-- BOTTOM NAV -->
@@ -653,7 +755,7 @@
                 <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                 <span>Katalog</span>
             </div>
-            <div class="nav-item" onclick="showMsg('Sila tekan Tempah WhatsApp pada troli')">
+            <div class="nav-item" onclick="showMsg('Tekan pada gambar bilik untuk mesej/tempahan')">
                 <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                 <span>Mesej</span>
             </div>
@@ -662,32 +764,6 @@
                 <span>Profil</span>
             </div>
         </nav>
-
-        <!-- OVERLAY & BOTTOM SHEET CART -->
-        <div class="overlay" id="overlay" onclick="toggleCart()"></div>
-        <div class="bottom-sheet" id="cart-modal">
-            <div class="cart-header">
-                <span>Troli Tempahan</span>
-                <button class="close-btn" onclick="toggleCart()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-            </div>
-            
-            <div class="cart-items" id="cart-items">
-                <!-- Cart items injected here -->
-            </div>
-
-            <div class="cart-footer">
-                <div class="cart-total-row">
-                    <span class="cart-total-label">Jumlah Keseluruhan:</span>
-                    <span class="cart-total-val" id="cart-total-val">RM0</span>
-                </div>
-                <button class="checkout-btn" onclick="checkoutWhatsApp()">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    Order via WhatsApp
-                </button>
-            </div>
-        </div>
 
         <!-- FULLSCREEN PRODUCT MODAL (IMAGE + FORM) -->
         <div class="product-modal" id="product-modal">
@@ -730,7 +806,7 @@
         </div>
 
         <!-- TOAST -->
-        <div class="toast" id="toast">Berjaya dimasukkan!</div>
+        <div class="toast" id="toast">Berjaya!</div>
 
     </div>
 
@@ -758,9 +834,7 @@
                 originalPrice: 180,
                 sold: 432,
                 rating: "4.8",
-                // Menggunakan imej lampiran untuk dipapar di katalog depan (imej luar)
                 image: "1000732377.jpg", 
-                // Semua imej lampiran yang akan dipaparkan bila dibesarkan / diklik
                 images: [
                     "1000732377.jpg",
                     "1000732381.jpg",
@@ -822,19 +896,13 @@
         ];
 
         // --- 2. APP STATE ---
-        let cart = {}; // { id: qty }
         let currentCategory = "Semua";
-        let currentViewProductId = null; // Untuk paparan borang langung
+        let currentViewProductId = null; 
 
         // --- 3. DOM ELEMENTS ---
         const productGrid = document.getElementById('product-grid');
         const searchInput = document.getElementById('search-input');
         const categoryBtns = document.querySelectorAll('.category-btn');
-        const cartBadge = document.getElementById('cart-badge');
-        const cartModal = document.getElementById('cart-modal');
-        const overlay = document.getElementById('overlay');
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartTotalVal = document.getElementById('cart-total-val');
         const toast = document.getElementById('toast');
 
         // --- 4. RENDER ENGINE ---
@@ -855,9 +923,9 @@
                 
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                // Tambah event klik pada kawasan imej untuk buka form & gambar besar
+                card.onclick = () => openProductModal(product.id);
                 card.innerHTML = `
-                    <div class="product-image-wrapper" onclick="openProductModal(${product.id})">
+                    <div class="product-image-wrapper">
                         <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy">
                         ${product.badge ? `<div class="badge-overlay">${product.badgeIcon} ${product.badge}</div>` : ''}
                     </div>
@@ -871,9 +939,6 @@
                             <span class="rating">⭐ ${product.rating}</span>
                             <span class="sold">${product.sold} Terjual</span>
                         </div>
-                        <button class="add-btn" onclick="addToCart(${product.id}, '${product.name}')">
-                            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        </button>
                     </div>
                 `;
                 productGrid.appendChild(card);
@@ -902,117 +967,13 @@
             renderProducts(filtered);
         }
 
-        // --- 6. CART LOGIC (KEKAL) ---
-        function addToCart(id, name) {
-            if (cart[id]) {
-                cart[id]++;
-            } else {
-                cart[id] = 1;
-            }
-            updateCartUI();
-            showMsg(`+1 ${name} ditambah ke troli`);
-        }
-
-        function updateQuantity(id, change) {
-            if (cart[id]) {
-                cart[id] += change;
-                if (cart[id] <= 0) delete cart[id];
-                updateCartUI();
-            }
-        }
-
-        function updateCartUI() {
-            const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
-            cartBadge.textContent = totalItems > 99 ? '99+' : totalItems;
-            
-            if (totalItems > 0) cartBadge.classList.add('show');
-            else cartBadge.classList.remove('show');
-
-            cartItemsContainer.innerHTML = '';
-            let totalPrice = 0;
-
-            if (Object.keys(cart).length === 0) {
-                cartItemsContainer.innerHTML = `
-                    <div class="empty-cart-state">
-                        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                        <p>Troli tempahan anda kosong.</p>
-                        <button class="empty-cart-btn" onclick="toggleCart()">Lihat Pakej</button>
-                    </div>
-                `;
-            } else {
-                for (const [id, qty] of Object.entries(cart)) {
-                    const product = products.find(p => p.id == id);
-                    if (!product) continue;
-                    
-                    const subtotal = product.price * qty;
-                    totalPrice += subtotal;
-
-                    const itemEl = document.createElement('div');
-                    itemEl.className = 'cart-item';
-                    itemEl.innerHTML = `
-                        <img src="${product.image}" alt="${product.name}">
-                        <div class="cart-item-info">
-                            <div class="cart-item-title">${product.name}</div>
-                            <div class="cart-item-price">RM${product.price}</div>
-                        </div>
-                        <div class="quantity-control">
-                            <button class="qty-btn" onclick="updateQuantity(${id}, -1)">-</button>
-                            <span class="qty-val">${qty}</span>
-                            <button class="qty-btn" onclick="updateQuantity(${id}, 1)">+</button>
-                        </div>
-                    `;
-                    cartItemsContainer.appendChild(itemEl);
-                }
-            }
-            cartTotalVal.textContent = `RM${totalPrice}`;
-        }
-
-        function toggleCart() {
-            const isOpen = cartModal.classList.contains('open');
-            if (isOpen) {
-                cartModal.classList.remove('open');
-                overlay.classList.remove('active');
-            } else {
-                updateCartUI(); 
-                cartModal.classList.add('open');
-                overlay.classList.add('active');
-            }
-        }
-
-        function checkoutWhatsApp() {
-            if (Object.keys(cart).length === 0) {
-                showMsg('Sila tambah bilik/pakej ke troli dahulu.');
-                return;
-            }
-
-            let msg = `*TEMPAHAN BARU - DKETAPANG CHALET* 🏖️\n\nHai, saya berminat untuk membuat tempahan melalui website:\n\n`;
-            let total = 0;
-
-            for (const [id, qty] of Object.entries(cart)) {
-                const product = products.find(p => p.id == id);
-                const subtotal = product.price * qty;
-                total += subtotal;
-                msg += `▪️ ${product.name}\n   ${qty} x RM${product.price} = *RM${subtotal}*\n`;
-            }
-
-            msg += `\n*JUMLAH KESELURUHAN: RM${total}*\n\nBoleh saya tahu jika ada kekosongan untuk tarikh (Isi Tarikh)? Terima kasih!`;
-
-            const phone = "60123574916";
-            const encodedMsg = encodeURIComponent(msg);
-            const whatsappUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodedMsg}`;
-
-            toggleCart();
-            window.open(whatsappUrl, '_blank');
-        }
-
-        // --- 7. DIRECT BOOKING MODAL LOGIC (BARU DITAMBAH) ---
+        // --- 6. DIRECT BOOKING MODAL LOGIC ---
         function openProductModal(id) {
             const product = products.find(p => p.id === id);
             if (!product) return;
             
             currentViewProductId = id;
             
-            // Render gallery imej (sokongan imej pelbagai untuk Rumah Hijau)
             const gallery = document.getElementById('pm-gallery');
             gallery.innerHTML = '';
             
@@ -1023,15 +984,11 @@
                 gallery.appendChild(img);
             });
 
-            // Isikan butiran
             document.getElementById('pm-header-title').textContent = product.name;
             document.getElementById('pm-title').textContent = product.name;
             document.getElementById('pm-price').textContent = `RM${product.price} / Malam`;
 
-            // Reset borang
             document.getElementById('booking-form').reset();
-
-            // Tunjuk paparan form
             document.getElementById('product-modal').classList.add('open');
         }
 
@@ -1050,7 +1007,6 @@
             const checkin = document.getElementById('form-checkin').value;
             const checkout = document.getElementById('form-checkout').value;
 
-            // Format mesej WhatsApp tempahan langsung
             let msg = `*TEMPAHAN LANGSUNG - DKETAPANG CHALET* 🏖️\n\n`;
             msg += `Item: *${product.name}*\n`;
             msg += `Harga: RM${product.price} / Malam\n\n`;
@@ -1064,6 +1020,84 @@
             const whatsappUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodedMsg}`;
 
             closeProductModal();
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // --- 7. STAR RATING & REVIEW SUBMISSION LOGIC ---
+        const stars = document.querySelectorAll('#star-rating span');
+        const ratingInput = document.getElementById('rating-value');
+        const reviewForm = document.getElementById('submit-review-form');
+        const reviewList = document.getElementById('review-list');
+
+        stars.forEach(star => {
+            star.addEventListener('click', (e) => {
+                const value = parseInt(e.target.getAttribute('data-value'));
+                ratingInput.value = value;
+                
+                stars.forEach(s => {
+                    if (parseInt(s.getAttribute('data-value')) <= value) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        reviewForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const rating = parseInt(ratingInput.value);
+            if (rating === 0) {
+                showMsg('Sila berikan rating bintang (Star).');
+                return;
+            }
+
+            const name = document.getElementById('reviewer-name').value;
+            const text = document.getElementById('review-text').value;
+
+            let starsHtml = '';
+            for(let i = 0; i < 5; i++) {
+                starsHtml += (i < rating) ? '★' : '☆';
+            }
+
+            const newReview = document.createElement('div');
+            newReview.className = 'review-item';
+            newReview.style.paddingTop = '10px';
+            newReview.style.borderTop = '1px solid #F1F1F2';
+            newReview.innerHTML = `
+                <div class="review-header">
+                    <span class="reviewer-name">${name}</span>
+                    <span class="review-stars">${starsHtml}</span>
+                </div>
+                <div class="review-text">${text}</div>
+            `;
+
+            reviewList.prepend(newReview);
+            reviewForm.reset();
+            ratingInput.value = 0;
+            stars.forEach(s => s.classList.remove('active'));
+
+            showMsg('Terima kasih atas ulasan anda!');
+        });
+
+        // --- 8. UTILS ---
+        let toastTimeout;
+        function showMsg(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // Initialize App
+        renderProducts(products);
+
+    </script>
+</body>
+</html>
+roductModal();
             window.open(whatsappUrl, '_blank');
         }
 
