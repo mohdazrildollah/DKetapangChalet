@@ -770,8 +770,8 @@
                 <span>G Map</span>
             </div>
 
-            <!-- FACEBOOK ICON & LINK -->
-            <div class="nav-item" onclick="window.open('https://www.facebook.com/search/top?q=D%27Ketapang%20Chalet', '_blank')">
+            <!-- FACEBOOK ICON & LINK WITH APP / WEB FALLBACK -->
+            <div class="nav-item" onclick="openFacebook()">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
                 </svg>
@@ -1157,6 +1157,25 @@
             currentIndex = (currentIndex + 1) % totalSlides;
             track.style.transform = `translateX(-${currentIndex * 100}%)`;
         }, 2000);
+
+        // --- 10. FACEBOOK APP / WEB FALLBACK LOGIC ---
+        function openFacebook() {
+            const fbAppUrl = 'fb://facewebmodal/f?href=https://www.facebook.com/search/top?q=D%27Ketapang%20Chalet';
+            const fbWebUrl = 'https://www.facebook.com/search/top?q=D%27Ketapang%20Chalet';
+            
+            // Cuba buka aplikasi Facebook terlebih dahulu
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = fbAppUrl;
+            document.body.appendChild(iframe);
+            
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+            }, 1000);
+
+            // Jika aplikasi tidak terbuka atau gagal, buka melalui pelayar web dalam masa singkat
+            window.location.href = fbWebUrl;
+        }
 
         // Initialize App
         renderProducts(products);
