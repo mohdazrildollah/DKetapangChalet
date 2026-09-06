@@ -73,34 +73,12 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            flex: 1; /* Center or push items correctly without search bar */
+            justify-content: center; /* Center the logo since search is gone */
         }
 
         .brand-logo svg {
             fill: var(--primary);
-        }
-
-        .search-bar {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            background: #F1F1F2;
-            padding: 8px 12px;
-            border-radius: 20px;
-            transition: all 0.2s;
-        }
-
-        .search-bar:focus-within {
-            background: #EAEAEB;
-            border: 1px solid #D0D0D2;
-        }
-
-        .search-bar input {
-            border: none;
-            background: transparent;
-            outline: none;
-            width: 100%;
-            margin-left: 8px;
-            font-size: 13px;
         }
 
         /* === MAIN CONTENT === */
@@ -593,10 +571,7 @@
                 <svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z"/></svg>
                 DKetapang
             </div>
-            <div class="search-bar">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <input type="text" id="search-input" placeholder="Cari bilik atau pakej...">
-            </div>
+            <!-- SEARCH BAR TELAH DIBUANG DARI SINI -->
         </header>
 
         <!-- MAIN FEED -->
@@ -757,12 +732,12 @@
                 <span>Mesej</span>
             </div>
 
-            <!-- AKTIVITI ICON -->
-            <div class="nav-item" onclick="showMsg('Fungsi Aktiviti akan datang')">
+            <!-- RATE US ICON (LINK TO GOOGLE MAPS) -->
+            <div class="nav-item" onclick="window.open('https://maps.google.com/?q=D%27Ketapang+Chalet', '_blank')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                 </svg>
-                <span>Aktiviti</span>
+                <span>Rate Us</span>
             </div>
         </nav>
 
@@ -848,7 +823,7 @@
             },
             {
                 id: 3,
-                name: "Rumah Kelabu", 
+                name: "Rumah Kelabu - 3 Bilik", 
                 category: "Rumah 3 Bilik",
                 price: 220,
                 originalPrice: null,
@@ -902,7 +877,6 @@
 
         // --- 3. DOM ELEMENTS ---
         const productGrid = document.getElementById('product-grid');
-        const searchInput = document.getElementById('search-input');
         const categoryBtns = document.querySelectorAll('.category-btn');
         const toast = document.getElementById('toast');
 
@@ -946,7 +920,7 @@
             });
         }
 
-        // --- 5. CATEGORY & SEARCH FILTER ---
+        // --- 5. CATEGORY FILTER ---
         categoryBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 categoryBtns.forEach(b => b.classList.remove('active'));
@@ -956,14 +930,9 @@
             });
         });
 
-        searchInput.addEventListener('input', filterAndRender);
-
         function filterAndRender() {
-            const query = searchInput.value.toLowerCase();
             const filtered = products.filter(p => {
-                const matchCat = currentCategory === 'Semua' || p.category === currentCategory;
-                const matchSearch = p.name.toLowerCase().includes(query);
-                return matchCat && matchSearch;
+                return currentCategory === 'Semua' || p.category === currentCategory;
             });
             renderProducts(filtered);
         }
