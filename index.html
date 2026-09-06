@@ -568,8 +568,8 @@
         <!-- HEADER -->
         <header>
             <div class="brand-logo">
-                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z"/></svg>
-                DKetapang
+                <img src="dketapang_icon.jpg" alt="Icon" style="height: 28px; width: auto; object-fit: contain;">
+                D'Ketapang Chalet
             </div>
             <!-- SEARCH BAR TELAH DIBUANG DARI SINI -->
         </header>
@@ -874,6 +874,7 @@
         // --- 2. APP STATE ---
         let currentCategory = "Semua";
         let currentViewProductId = null; 
+        let modalCarouselInterval = null; // Menambah kawalan interval pusingan modal
 
         // --- 3. DOM ELEMENTS ---
         const productGrid = document.getElementById('product-grid');
@@ -960,11 +961,26 @@
 
             document.getElementById('booking-form').reset();
             document.getElementById('product-modal').classList.add('open');
+
+            // Auto-swipe (Slider) untuk Modal Gallery jika ada lebih dari 1 gambar
+            clearInterval(modalCarouselInterval);
+            if (imageList.length > 1) {
+                let currentImgIndex = 0;
+                modalCarouselInterval = setInterval(() => {
+                    currentImgIndex = (currentImgIndex + 1) % imageList.length;
+                    const imgWidth = gallery.clientWidth;
+                    gallery.scrollTo({
+                        left: currentImgIndex * imgWidth,
+                        behavior: 'smooth'
+                    });
+                }, 2000); // Masa swipe auto dalam sela 2 saat
+            }
         }
 
         function closeProductModal() {
             document.getElementById('product-modal').classList.remove('open');
             currentViewProductId = null;
+            clearInterval(modalCarouselInterval); // Hentikan swipe bila modal ditutup
         }
 
         function submitDirectBooking(e) {
