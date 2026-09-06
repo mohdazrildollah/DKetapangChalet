@@ -414,6 +414,15 @@
         .reviewer-name {
             font-size: 13px;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .reviewer-name img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #EAEAEB;
         }
         .review-stars {
             color: var(--star-color);
@@ -675,7 +684,7 @@
 
             <!-- REVIEW & RATING SECTION -->
             <section class="reviews-section">
-                <h3>Ulasan & Rating Pelanggan</h3>
+                <h3>Ulasan Google Pelanggan</h3>
                 
                 <form class="review-form" id="submit-review-form">
                     <div class="star-rating" id="star-rating">
@@ -692,21 +701,38 @@
                 </form>
 
                 <div class="review-list" id="review-list">
-                    <!-- Mock Review 1 -->
+                    <!-- Google Review 1 -->
                     <div class="review-item">
                         <div class="review-header">
-                            <span class="reviewer-name">Nurul Huda</span>
+                            <span class="reviewer-name">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="#8A8B91"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                                Mohd Faizal
+                            </span>
                             <span class="review-stars">★★★★★</span>
                         </div>
-                        <div class="review-text">Sangat selesa dan berbaloi. Pemandangan pantai memang cantik terutamanya waktu petang. Akan repeat lagi!</div>
+                        <div class="review-text">Chalet yang sangat selesa dan bersih. Lokasi berdekatan dengan pantai, angin sepoi-sepoi bahasa memang tenang. Owner sangat peramah dan mudah berurusan. Kemudahan BBQ pun disediakan. Sangat recommended untuk percutian keluarga.</div>
                     </div>
-                    <!-- Mock Review 2 -->
+                    <!-- Google Review 2 -->
                     <div class="review-item" style="padding-top: 10px; border-top: 1px solid #F1F1F2;">
                         <div class="review-header">
-                            <span class="reviewer-name">Azman Rosli</span>
+                            <span class="reviewer-name">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="#8A8B91"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                                Siti Aishah
+                            </span>
+                            <span class="review-stars">★★★★★</span>
+                        </div>
+                        <div class="review-text">Pengalaman yang menarik menginap di D'Ketapang Chalet. Bilik kemas, aircond sejuk dan tandas bersih. View waktu petang sangat cantik. Harga berpatutan dengan fasiliti yang diberikan. Akan datang lagi nanti!</div>
+                    </div>
+                    <!-- Google Review 3 -->
+                    <div class="review-item" style="padding-top: 10px; border-top: 1px solid #F1F1F2;">
+                        <div class="review-header">
+                            <span class="reviewer-name">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="#8A8B91"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                                Ahmad Syahir
+                            </span>
                             <span class="review-stars">★★★★☆</span>
                         </div>
-                        <div class="review-text">Bilik bersih, kemudahan lengkap. Sangat sesuai untuk percutian keluarga. BBQ spot pun strategik.</div>
+                        <div class="review-text">Tempat yang sesuai untuk healing. Tenang je jauh dari hiruk pikuk bandar. Mudah nak cari makan sebab banyak kedai makan berdekatan. Parking pun luas. Cuma kalau boleh tambah lagi tempat lepak kat luar bilik lagi best.</div>
                     </div>
                 </div>
             </section>
@@ -1052,7 +1078,10 @@
             newReview.style.borderTop = '1px solid #F1F1F2';
             newReview.innerHTML = `
                 <div class="review-header">
-                    <span class="reviewer-name">${name}</span>
+                    <span class="reviewer-name">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="#8A8B91"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                        ${name}
+                    </span>
                     <span class="review-stars">${starsHtml}</span>
                 </div>
                 <div class="review-text">${text}</div>
