@@ -112,51 +112,11 @@
         }
         main::-webkit-scrollbar { display: none; }
 
-        /* === PROMO BANNER === */
-        .hero-banner {
-            margin: 12px 15px;
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            background: linear-gradient(135deg, #00C964, #00B14F); 
-            color: white;
-            padding: 24px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0, 177, 79, 0.3); 
-        }
-        
-        .hero-banner::after {
-            content: '';
-            position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            background: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="2" fill="white" fill-opacity="0.2"/></svg>') repeat;
-            pointer-events: none;
-        }
-
-        .hero-banner h2 { font-size: 20px; margin-bottom: 6px; font-weight: 800; z-index: 1; line-height: 1.2; }
-        .hero-banner p { font-size: 13px; opacity: 0.9; z-index: 1; }
-        .hero-banner .shop-now {
-            margin-top: 15px;
-            background: #fff;
-            color: var(--primary);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 12px;
-            width: fit-content;
-            z-index: 1;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
         /* === CATEGORIES === */
         .categories-wrapper {
             display: flex;
             overflow-x: auto;
-            padding: 5px 15px 15px 15px;
+            padding: 15px;
             gap: 10px;
             scrollbar-width: none;
         }
@@ -612,13 +572,6 @@
 
         <!-- MAIN FEED -->
         <main>
-            <!-- BANNER -->
-            <section class="hero-banner">
-                <h2>Cuti-Cuti Pantai!<br>Diskaun up to 20%</h2>
-                <p>Tempah sekarang sebelum penuh. Terhad.</p>
-                <button class="shop-now" onclick="document.querySelector('.categories-wrapper').scrollIntoView({behavior:'smooth'})">Tempah Sekarang</button>
-            </section>
-
             <!-- CATEGORIES -->
             <section class="categories-wrapper" id="categories-wrapper">
                 <div class="category-btn active" data-category="Semua">Semua</div>
@@ -750,10 +703,15 @@
                 <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                 <span>Utama</span>
             </div>
-            <div class="nav-item" onclick="showMsg('Fungsi Katalog akan datang')">
-                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                <span>Katalog</span>
+            
+            <!-- WAZE ICON & NAVIGATION -->
+            <div class="nav-item" onclick="window.open('https://www.waze.com/ul?q=D%27Ketapang%20Chalet&navigate=yes', '_blank')">
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                    <path d="M20.69 11.23a9.49 9.49 0 0 0-9.28-7.73c-5.26 0-9.53 4.27-9.53 9.53a9.5 9.5 0 0 0 4.19 7.9l-1 2.37a.5.5 0 0 0 .69.64l2.81-1.63a9.54 9.54 0 0 0 3.32.61c5.26 0 9.52-4.27 9.52-9.53a9.38 9.38 0 0 0-.72-2.16zM8.52 10.74a1.74 1.74 0 1 1 1.74-1.74 1.74 1.74 0 0 1-1.74 1.74zm6.06 0a1.74 1.74 0 1 1 1.74-1.74 1.74 1.74 0 0 1-1.74 1.74zm-2.06 4.31a3.5 3.5 0 0 1-2.92-1.57.5.5 0 0 1 .8-.6 2.5 2.5 0 0 0 4.24 0 .5.5 0 0 1 .8.6 3.5 3.5 0 0 1-2.92 1.57z"/>
+                </svg>
+                <span>Waze</span>
             </div>
+
             <div class="nav-item" onclick="showMsg('Tekan pada gambar bilik untuk mesej/tempahan')">
                 <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                 <span>Mesej</span>
@@ -815,7 +773,7 @@
         const products = [
             {
                 id: 1,
-                name: "Rumah Merah", 
+                name: "Rumah Kelabu - 2 Bilik", 
                 category: "Rumah 2 Bilik",
                 price: 150,
                 originalPrice: 300,
@@ -858,8 +816,8 @@
             },
             {
                 id: 4,
-                name: "Rumah Biru", 
-                category: "Rumah 2 Bilik",
+                name: "Rumah Biru - 3 Bilik", 
+                category: "Rumah 3 Bilik",
                 price: 220,
                 originalPrice: null,
                 sold: 564,
