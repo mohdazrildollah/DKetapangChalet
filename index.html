@@ -9,11 +9,11 @@
         :root {
             --primary: #00B14F; 
             --primary-hover: #009944; 
-            --bg-color: #F1F1F2;
+            --bg-color: #E8F5E9; /* Refreshing green background */
             --card-bg: #FFFFFF;
             --text-main: #161823;
             --text-muted: #8A8B91;
-            --border-color: #E3E3E4;
+            --border-color: #C8E6C9;
             --success: #25D366; 
             --star-color: #FFD700;
         }
@@ -27,7 +27,7 @@
         }
 
         body {
-            background-color: #E5E5E5;
+            background-color: #C8E6C9;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -55,7 +55,7 @@
 
         /* === HEADER === */
         header {
-            background: #fff;
+            background: #F1F8F6;
             padding: 12px 15px;
             display: flex;
             align-items: center;
@@ -131,7 +131,7 @@
         
         .category-btn {
             padding: 8px 18px;
-            background: #fff;
+            background: #F1F8F6;
             border: 1px solid var(--border-color);
             border-radius: 20px;
             font-size: 13px;
@@ -254,7 +254,7 @@
 
         /* === CHALET INFO SECTION === */
         .info-section {
-            background: #fff;
+            background: #F1F8F6;
             margin: 0 15px 15px 15px;
             border-radius: 12px;
             padding: 15px;
@@ -303,7 +303,7 @@
 
         /* === MAP SECTION === */
         .map-section {
-            background: #fff;
+            background: #F1F8F6;
             margin: 0 15px 15px 15px;
             border-radius: 12px;
             padding: 15px;
@@ -330,7 +330,7 @@
 
         /* === REVIEWS SECTION === */
         .reviews-section {
-            background: #fff;
+            background: #F1F8F6;
             margin: 0 15px 15px 15px;
             border-radius: 12px;
             padding: 15px;
@@ -372,7 +372,7 @@
             border-radius: 8px;
             font-size: 13px;
             outline: none;
-            background: #F8F8F8;
+            background: #FFFFFF;
             font-family: inherit;
         }
         .review-form input:focus, .review-form textarea:focus {
@@ -442,7 +442,7 @@
             align-items: center;
             padding: 10px 0;
             padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
-            background: #fff;
+            background: #F1F8F6;
             border-top: 1px solid var(--border-color);
             position: sticky;
             bottom: 0;
@@ -753,9 +753,12 @@
                 <span>Waze</span>
             </div>
 
-            <div class="nav-item" onclick="showMsg('Tekan pada gambar bilik untuk mesej/tempahan')">
-                <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <span>Mesej</span>
+            <!-- G MAP ICON & NAVIGATION -->
+            <div class="nav-item" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=D%27Ketapang+Chalet', '_blank')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>G Map</span>
             </div>
 
             <!-- RATE US ICON (LINK TO GOOGLE MAPS) -->
