@@ -112,6 +112,35 @@
         }
         main::-webkit-scrollbar { display: none; }
 
+        /* === BANNER CAROUSEL === */
+        .banner-carousel {
+            margin: 12px 15px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            height: 160px;
+            background: #EAEAEB;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .carousel-slide {
+            flex: 0 0 100%;
+            height: 100%;
+        }
+        
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
         /* === CATEGORIES === */
         .categories-wrapper {
             display: flex;
@@ -572,6 +601,17 @@
 
         <!-- MAIN FEED -->
         <main>
+            <!-- BANNER CAROUSEL -->
+            <section class="banner-carousel">
+                <div class="carousel-track" id="carousel-track">
+                    <div class="carousel-slide"><img src="cruise_1.jpg" alt="Aktiviti 1"></div>
+                    <div class="carousel-slide"><img src="cruise_2.jpg" alt="Aktiviti 2"></div>
+                    <div class="carousel-slide"><img src="cruise_3.jpg" alt="Aktiviti 3"></div>
+                    <div class="carousel-slide"><img src="cruise_4.jpg" alt="Aktiviti 4"></div>
+                    <div class="carousel-slide"><img src="cruise_5.jpg" alt="Aktiviti 5"></div>
+                </div>
+            </section>
+
             <!-- CATEGORIES -->
             <section class="categories-wrapper" id="categories-wrapper">
                 <div class="category-btn active" data-category="Semua">Semua</div>
@@ -716,9 +756,13 @@
                 <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                 <span>Mesej</span>
             </div>
-            <div class="nav-item" onclick="showMsg('Fungsi Profil akan datang')">
-                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                <span>Profil</span>
+
+            <!-- AKTIVITI ICON -->
+            <div class="nav-item" onclick="showMsg('Fungsi Aktiviti akan datang')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+                <span>Aktiviti</span>
             </div>
         </nav>
 
@@ -841,7 +885,7 @@
             {
                 id: 6,
                 name: "Rumah Pink", 
-                category: "Pakej",
+                category: "Rumah 2 Bilik",
                 price: 150,
                 originalPrice: 150,
                 sold: 340,
@@ -1047,6 +1091,16 @@
                 toast.classList.remove('show');
             }, 2000);
         }
+
+        // --- 9. BANNER CAROUSEL LOGIC ---
+        const track = document.getElementById('carousel-track');
+        let currentIndex = 0;
+        const totalSlides = 5;
+
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }, 2000);
 
         // Initialize App
         renderProducts(products);
