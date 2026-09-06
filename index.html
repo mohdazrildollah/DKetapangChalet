@@ -587,6 +587,7 @@
             <div class="brand-logo">
                 <img src="dketapang_icon.jpg" alt="Icon" style="height: 28px; width: auto; object-fit: contain;">
                 D'Ketapang Chalet
+                <img src="kampungstay.jpg" alt="KampungStay" style="height: 26px; width: auto; object-fit: contain; margin-left: 6px;">
             </div>
             <!-- SEARCH BAR TELAH DIBUANG DARI SINI -->
         </header>
@@ -997,6 +998,21 @@
             document.getElementById('pm-price').textContent = `RM${product.price} / Malam`;
 
             document.getElementById('booking-form').reset();
+            
+            // Set min date for check-in to tomorrow (tarikh esok dan seterusnya)
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const tomorrowStr = tomorrow.toISOString().split('T')[0];
+            
+            const checkinInput = document.getElementById('form-checkin');
+            const checkoutInput = document.getElementById('form-checkout');
+            
+            checkinInput.min = tomorrowStr;
+            checkinInput.value = "";
+            checkoutInput.min = tomorrowStr;
+            checkoutInput.value = "";
+
             document.getElementById('product-modal').classList.add('open');
 
             // Auto-swipe (Slider) untuk Modal Gallery jika ada lebih dari 1 gambar
@@ -1013,6 +1029,21 @@
                 }, 2000); // Masa swipe auto dalam sela 2 saat
             }
         }
+
+        // Event listener untuk mengawal minimum tarikh check-out berdasarkan check-in
+        document.getElementById('form-checkin').addEventListener('change', function() {
+            const checkinVal = this.value;
+            const checkoutInput = document.getElementById('form-checkout');
+            if (checkinVal) {
+                const checkinDate = new Date(checkinVal);
+                checkinDate.setDate(checkinDate.getDate() + 1);
+                const nextDayStr = checkinDate.toISOString().split('T')[0];
+                checkoutInput.min = nextDayStr;
+                if (checkoutInput.value && checkoutInput.value <= checkinVal) {
+                    checkoutInput.value = nextDayStr;
+                }
+            }
+        });
 
         function closeProductModal() {
             document.getElementById('product-modal').classList.remove('open');
