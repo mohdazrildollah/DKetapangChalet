@@ -16,6 +16,7 @@
             --border-color: #C8E6C9;
             --success: #25D366; 
             --star-color: #FFD700;
+            --booked-color: #FF5252;
         }
 
         * {
@@ -524,6 +525,70 @@
         .pm-details { padding: 20px; }
         .pm-title { font-size: 20px; font-weight: 700; margin-bottom: 5px; }
         .pm-price { font-size: 22px; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
+
+        /* === SMART CALENDAR STYLES === */
+        .calendar-widget {
+            background: #F8F9FA;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+        .cal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        .cal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            text-align: center;
+            font-size: 11px;
+        }
+        .cal-day-name {
+            font-weight: 600;
+            color: var(--text-muted);
+            padding-bottom: 4px;
+        }
+        .cal-cell {
+            padding: 6px 0;
+            border-radius: 4px;
+            background: #fff;
+            color: var(--text-main);
+        }
+        .cal-cell.booked {
+            background: #FFEBEE;
+            color: var(--booked-color);
+            font-weight: 700;
+            text-decoration: line-through;
+        }
+        .cal-cell.available {
+            background: #E8F5E9;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .cal-legend {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+            font-size: 10px;
+            color: var(--text-muted);
+            justify-content: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
         
         .pm-form { display: flex; flex-direction: column; gap: 15px; }
         .pm-form-group { display: flex; flex-direction: column; gap: 6px; }
@@ -795,6 +860,30 @@
                     <div class="pm-title" id="pm-title">-</div>
                     <div class="pm-price" id="pm-price">-</div>
                     
+                    <!-- SMART CALENDAR WIDGET -->
+                    <div class="calendar-widget">
+                        <div class="cal-header">
+                            <span id="cal-month-year">September 2026</span>
+                            <span style="font-size:11px; color:var(--primary);">Status Kekosongan</span>
+                        </div>
+                        <div class="cal-grid" id="cal-days-header">
+                            <div class="cal-day-name">A</div>
+                            <div class="cal-day-name">S</div>
+                            <div class="cal-day-name">S</div>
+                            <div class="cal-day-name">R</div>
+                            <div class="cal-day-name">K</div>
+                            <div class="cal-day-name">J</div>
+                            <div class="cal-day-name">S</div>
+                        </div>
+                        <div class="cal-grid" id="cal-dates-grid">
+                            <!-- Dynamically generated dates -->
+                        </div>
+                        <div class="cal-legend">
+                            <div class="legend-item"><div class="legend-dot" style="background:#E8F5E9; border:1px solid var(--primary);"></div><span>Kosong</span></div>
+                            <div class="legend-item"><div class="legend-dot" style="background:var(--booked-color);"></div><span>Ditempah</span></div>
+                        </div>
+                    </div>
+
                     <form class="pm-form" id="booking-form" onsubmit="submitDirectBooking(event)">
                         <div class="pm-form-group">
                             <label>Nama Anda</label>
@@ -832,20 +921,21 @@
                 id: 1,
                 name: "Rumah Kelabu - 2 Bilik", 
                 category: "Rumah 2 Bilik",
-                price: 150,
+                price: 180,
                 originalPrice: 300,
                 sold: 215,
                 rating: "4.9",
                 image: "https://images.unsplash.com/photo-1587061949409-02df41d5e562?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
                 badge: "Laris 🔥",
-                badgeIcon: '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
+                badgeIcon: '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
+                bookedDates: [10, 11, 15, 16, 22, 23]
             },
             {
                 id: 2,
                 name: "Rumah Hijau", 
                 category: "Rumah 2 Bilik",
-                price: 150,
-                originalPrice: 180,
+                price: 180,
+                originalPrice: 220,
                 sold: 432,
                 rating: "4.8",
                 image: "1000732377.jpg", 
@@ -857,7 +947,8 @@
                     "1000732380.jpg"
                 ],
                 badge: "Free WiFi",
-                badgeIcon: '<svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0 M1.42 9a16 16 0 0121.16 0 M8.53 16.11a6 6 0 016.95 0 M12 20h.01"/></svg>'
+                badgeIcon: '<svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0 M1.42 9a16 16 0 0121.16 0 M8.53 16.11a6 6 0 016.95 0 M12 20h.01"/></svg>',
+                bookedDates: [5, 6, 12, 13, 20, 21]
             },
             {
                 id: 3,
@@ -869,7 +960,8 @@
                 rating: "4.7",
                 image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
                 badge: "Seaview",
-                badgeIcon: '<svg viewBox="0 0 24 24"><path d="M2 12h20 M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z M12 2a15.3 15.3 0 00-4 10 15.3 15.3 0 004 10 15.3 15.3 0 004-10 15.3 15.3 0 00-4-10z"/></svg>'
+                badgeIcon: '<svg viewBox="0 0 24 24"><path d="M2 12h20 M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z M12 2a15.3 15.3 0 00-4 10 15.3 15.3 0 004 10 15.3 15.3 0 004-10 15.3 15.3 0 00-4-10z"/></svg>',
+                bookedDates: [8, 9, 14, 15, 25]
             },
             {
                 id: 4,
@@ -881,38 +973,41 @@
                 rating: "4.5",
                 image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
                 badge: "Murah",
-                badgeIcon: '<svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>'
+                badgeIcon: '<svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>',
+                bookedDates: [1, 2, 3, 18, 19]
             },
             {
                 id: 5,
                 name: "Rumah Kuning", 
                 category: "Rumah 2 Bilik",
-                price: 150,
+                price: 180,
                 originalPrice: 420,
                 sold: 89,
                 rating: "5.0",
                 image: "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
                 badge: "Premium",
-                badgeIcon: '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>'
+                badgeIcon: '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>',
+                bookedDates: [7, 8, 9, 24, 25]
             },
             {
                 id: 6,
                 name: "Rumah Pink", 
                 category: "Rumah 2 Bilik",
-                price: 150,
-                originalPrice: 150,
+                price: 180,
+                originalPrice: 200,
                 sold: 340,
                 rating: "4.8",
                 image: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
                 badge: "Aktiviti",
-                badgeIcon: '<svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>'
+                badgeIcon: '<svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>',
+                bookedDates: [4, 11, 12, 28, 29]
             }
         ];
 
         // --- 2. APP STATE ---
         let currentCategory = "Semua";
         let currentViewProductId = null; 
-        let modalCarouselInterval = null; // Menambah kawalan interval pusingan modal
+        let modalCarouselInterval = null;
 
         // --- 3. DOM ELEMENTS ---
         const productGrid = document.getElementById('product-grid');
@@ -976,6 +1071,36 @@
             renderProducts(filtered);
         }
 
+        // --- RENDER SMART CALENDAR WIDGET ---
+        function renderCalendarWidget(bookedDates = []) {
+            const grid = document.getElementById('cal-dates-grid');
+            grid.innerHTML = '';
+            
+            const totalDays = 30;
+            const startDayIndex = 2; // 0=Ahad, 1=Isnin, 2=Selasa
+            
+            for(let i = 0; i < startDayIndex; i++) {
+                const emptyCell = document.createElement('div');
+                grid.appendChild(emptyCell);
+            }
+            
+            for(let day = 1; day <= totalDays; day++) {
+                const cell = document.createElement('div');
+                cell.className = 'cal-cell';
+                cell.textContent = day;
+                
+                if(bookedDates.includes(day)) {
+                    cell.classList.add('booked');
+                    cell.title = "Sudah Ditempah";
+                } else {
+                    cell.classList.add('available');
+                    cell.title = "Kosong";
+                }
+                
+                grid.appendChild(cell);
+            }
+        }
+
         // --- 6. DIRECT BOOKING MODAL LOGIC ---
         function openProductModal(id) {
             const product = products.find(p => p.id === id);
@@ -997,9 +1122,10 @@
             document.getElementById('pm-title').textContent = product.name;
             document.getElementById('pm-price').textContent = `RM${product.price} / Malam`;
 
+            renderCalendarWidget(product.bookedDates);
+
             document.getElementById('booking-form').reset();
             
-            // Set min date for check-in to tomorrow (tarikh esok dan seterusnya)
             const today = new Date();
             const tomorrow = new Date(today);
             tomorrow.setDate(tomorrow.getDate() + 1);
@@ -1015,7 +1141,6 @@
 
             document.getElementById('product-modal').classList.add('open');
 
-            // Auto-swipe (Slider) untuk Modal Gallery jika ada lebih dari 1 gambar
             clearInterval(modalCarouselInterval);
             if (imageList.length > 1) {
                 let currentImgIndex = 0;
@@ -1026,11 +1151,10 @@
                         left: currentImgIndex * imgWidth,
                         behavior: 'smooth'
                     });
-                }, 2000); // Masa swipe auto dalam sela 2 saat
+                }, 2000);
             }
         }
 
-        // Event listener untuk mengawal minimum tarikh check-out berdasarkan check-in
         document.getElementById('form-checkin').addEventListener('change', function() {
             const checkinVal = this.value;
             const checkoutInput = document.getElementById('form-checkout');
@@ -1048,7 +1172,7 @@
         function closeProductModal() {
             document.getElementById('product-modal').classList.remove('open');
             currentViewProductId = null;
-            clearInterval(modalCarouselInterval); // Hentikan swipe bila modal ditutup
+            clearInterval(modalCarouselInterval);
         }
 
         function submitDirectBooking(e) {
@@ -1061,9 +1185,20 @@
             const checkin = document.getElementById('form-checkin').value;
             const checkout = document.getElementById('form-checkout').value;
 
+            // Kira bilangan malam
+            const checkinDate = new Date(checkin);
+            const checkoutDate = new Date(checkout);
+            const timeDiff = checkoutDate.getTime() - checkinDate.getTime();
+            const nights = Math.max(1, Math.ceil(timeDiff / (1000 * 3600 * 24)));
+            
+            // Kira jumlah bayaran (bilangan malam * harga seunit)
+            const totalPrice = nights * product.price;
+
             let msg = `*TEMPAHAN LANGSUNG - DKETAPANG CHALET* 🏖️\n\n`;
             msg += `Item: *${product.name}*\n`;
-            msg += `Harga: RM${product.price} / Malam\n\n`;
+            msg += `Harga Semasa: RM${product.price} / Malam\n`;
+            msg += `Jumlah Malam: ${nights} Malam\n`;
+            msg += `Jumlah Bayaran: *RM${totalPrice}*\n\n`;
             msg += `Nama: ${nama}\n`;
             msg += `Check-in: ${checkin}\n`;
             msg += `Check-out: ${checkout}\n\n`;
@@ -1163,7 +1298,6 @@
             const fbAppUrl = 'fb://facewebmodal/f?href=https://www.facebook.com/share/1HFxGswYm2/';
             const fbWebUrl = 'https://www.facebook.com/share/1HFxGswYm2/';
             
-            // Cuba buka aplikasi Facebook terlebih dahulu
             const iframe = document.createElement('iframe');
             iframe.style.display = 'none';
             iframe.src = fbAppUrl;
@@ -1173,7 +1307,6 @@
                 document.body.removeChild(iframe);
             }, 1000);
 
-            // Jika aplikasi tidak terbuka atau gagal, buka melalui pelayar web dalam masa singkat
             window.location.href = fbWebUrl;
         }
 
