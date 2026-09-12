@@ -951,6 +951,19 @@
                 bookedDates: [5, 6, 12, 13, 20, 21]
             },
             {
+                id: 7,
+                name: "Rumah Biru - 2 Bilik", 
+                category: "Rumah 2 Bilik",
+                price: 180,
+                originalPrice: 250,
+                sold: 140,
+                rating: "4.9",
+                image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                badge: "Baru ✨",
+                badgeIcon: '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>',
+                bookedDates: [3, 4, 17, 18]
+            },
+            {
                 id: 3,
                 name: "Rumah Kelabu - 3 Bilik", 
                 category: "Rumah 3 Bilik",
@@ -1007,7 +1020,7 @@
         // --- 2. APP STATE ---
         let currentCategory = "Semua";
         let currentViewProductId = null; 
-        let modalCarouselInterval = null;
+        let modalCarouselInterval = null; // Menambah kawalan interval pusingan modal
 
         // --- 3. DOM ELEMENTS ---
         const productGrid = document.getElementById('product-grid');
@@ -1185,19 +1198,17 @@
             const checkin = document.getElementById('form-checkin').value;
             const checkout = document.getElementById('form-checkout').value;
 
-            // Kira bilangan malam
+            // Kira bilangan malam dan jumlah bayaran
             const checkinDate = new Date(checkin);
             const checkoutDate = new Date(checkout);
             const timeDiff = checkoutDate.getTime() - checkinDate.getTime();
             const nights = Math.max(1, Math.ceil(timeDiff / (1000 * 3600 * 24)));
-            
-            // Kira jumlah bayaran (bilangan malam * harga seunit)
             const totalPrice = nights * product.price;
 
             let msg = `*TEMPAHAN LANGSUNG - DKETAPANG CHALET* 🏖️\n\n`;
             msg += `Item: *${product.name}*\n`;
-            msg += `Harga Semasa: RM${product.price} / Malam\n`;
-            msg += `Jumlah Malam: ${nights} Malam\n`;
+            msg += `Harga: RM${product.price} / Malam\n`;
+            msg += `Tempoh: ${nights} Malam\n`;
             msg += `Jumlah Bayaran: *RM${totalPrice}*\n\n`;
             msg += `Nama: ${nama}\n`;
             msg += `Check-in: ${checkin}\n`;
